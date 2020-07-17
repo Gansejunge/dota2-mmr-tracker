@@ -9,3 +9,6 @@
 .idea
 /.idea/
 .idea/
+mmr.png
+/venv/
+__pycache__/
