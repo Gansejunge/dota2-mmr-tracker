@@ -18,7 +18,7 @@ def payload():
 		print("Received expired access token")
 		print(request.headers['X-Auth-Token'])
 		return Response(response="Access denied", status=403)
-	data = request.form.to_dict()
+	data = request.json
 	if not all(isinstance(i, int) for i in
 	       [data['mmr'], data['match_id'], data['timestamp'], data['player_hero_id'], data['duration']]) and not isinstance(
 		data['player_has_won'], bool):

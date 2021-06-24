@@ -3,9 +3,9 @@ from os import environ as environment
 
 
 def insert_mmr_and_general_match_information(data,db):
-	connection = mariadb.connect(host=environment['SQL_SERVER'], user=environment['API_INSERT_'], password=environment['API_INSERT_PW'], database=environment['API_INSERT_DB'])
+	connection = mariadb.connect(host=environment['SQL_SERVER'], user=environment['API_INSERT_USER'], password=environment['API_INSERT_PW'], database=db)
 	try:
-		print("Connecting to "+db)
+		print("Connecting to database:"+db)
 		with connection.cursor() as cursor:
 			cursor.execute("insert into `mmr`(`mmr`, `matchId`, `heroId`, `win`,`playerRadiant`) values (?,?,?,?,?)",
 			               (data['mmr'], data['match_id'], data['player_hero_id'], data['player_has_won'],
@@ -15,7 +15,7 @@ def insert_mmr_and_general_match_information(data,db):
 				" values (?,?,?,FROM_UNIXTIME(?),?,?)", (
 					data['match_id'], data['radiant_win'], data['duration'], data['timestamp'], data['radiant_score'],
 					data['dire_score']))
-
+		print("Closing connection, success")
 		connection.commit()
 
 	except Exception as e:

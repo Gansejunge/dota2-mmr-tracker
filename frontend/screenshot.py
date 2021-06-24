@@ -3,9 +3,8 @@ from requests import request
 from re import sub
 from json import loads
 from os import environ as environment
-from os import remove
 
-OCR_SPACE_API_URL = ''
+OCR_SPACE_API_URL = 'https://api.ocr.space/parse/image'
 
 def get_mmr_as_image():
 	with mss() as sct:
@@ -25,7 +24,6 @@ def process_screenshot():
 	print("Uploading image")
 	response = request("POST", OCR_SPACE_API_URL, headers=headers, data=payload, files=files)
 	answer = loads(response.text.encode('utf8'))
-	remove('mmr.png')
 	return int(sub('[^0-9]+', '', answer['ParsedResults'][0]['ParsedText']))
 
 
